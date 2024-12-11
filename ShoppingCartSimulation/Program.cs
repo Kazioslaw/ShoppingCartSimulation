@@ -156,7 +156,7 @@ namespace ShoppingCartSimulation
 			else if (orderList.Count == 3)
 			{
 				var discountAmount = orderList.Where(o => o.Product.Price == orderList.Min(p => p.Product.Price)).Sum(p => p.Product.Price * 0.2m * p.Quantity);
-				total = orderList.Sum(p => p.Product.Price) * discountAmount;
+				total = orderList.Sum(p => p.Product.Price) - discountAmount;
 			}
 			else
 			{
