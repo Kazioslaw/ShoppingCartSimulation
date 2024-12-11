@@ -147,7 +147,29 @@ namespace ShoppingCartSimulation
 
 		static void GetTotal()
 		{
+			decimal total = 0;
+			if (orderList.Count == 2)
+			{
+				var discountAmount = orderList.Where(o => o.Product.Price == orderList.Min(p => p.Product.Price)).Sum(p => p.Product.Price * 0.1m * p.Quantity);
+				total = orderList.Sum(p => p.Product.Price * p.Quantity) - discountAmount;
+			}
+			else if (orderList.Count == 3)
+			{
+				var discountAmount = orderList.Where(o => o.Product.Price == orderList.Min(p => p.Product.Price)).Sum(p => p.Product.Price * 0.2m * p.Quantity);
+				total = orderList.Sum(p => p.Product.Price) * discountAmount;
+			}
+			else
+			{
+				total = orderList.Sum(p => p.Product.Price);
+			}
 
+			if (total >= 5000)
+			{
+				decimal additionalDiscount = total * 0.05m;
+				total -= additionalDiscount;
+			}
+			Console.Clear();
+			Console.WriteLine($"Łączna kwota zamówienia wynosi: {total:C} \n");
 		}
 	}
 }
