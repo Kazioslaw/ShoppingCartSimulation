@@ -115,7 +115,35 @@ namespace ShoppingCartSimulation
 
 			}
 		}
-		static void DeletingProducts() { }
+		static void DeletingProducts()
+		{
+			Console.WriteLine("W koszyku masz następujące produkty: ");
+			foreach (var order in orderList)
+			{
+				Console.WriteLine($"{order.Product.ID}. {order.Product.Name}, {order.Quantity} {(order.Quantity == 1 ? "sztuka" : order.Quantity > 4 ? "sztuk" : "sztuki")}");
+			}
+
+			Console.Write("Który z produktów ma zostać usunięty, wpisz b by wrócić: ");
+			string userInput = Console.ReadLine();
+			bool isValid = int.TryParse(userInput, out int userPick);
+			if (userInput.ToLower() == "b")
+			{
+				return;
+			}
+			else if (!isValid)
+			{
+				if (userPick > orderList.Count)
+				{
+					Console.WriteLine("Niepoprawny numer produktu. Spróbuj jeszcze raz");
+					DeletingProducts();
+				}
+
+				else
+				{
+					orderList.RemoveAt(userPick - 1);
+				}
+			}
+		}
 
 		static void GetTotal()
 		{
