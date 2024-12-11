@@ -7,6 +7,7 @@
 		{
 			ID = _nextID++;
 			OrderDate = DateTime.Now;
+			OrderItems = new List<OrderItem>();
 		}
 		public int ID { get; private set; }
 		public DateTime OrderDate { get; private set; }
