@@ -65,9 +65,56 @@ namespace ShoppingCartSimulation
 
 		static void AddingProducts()
 		{
+			foreach (var product in products)
+			{
+				Console.WriteLine($"{product.ID}. {product.Name}");
+			}
+			Console.WriteLine("6. Powrót");
+			Console.Write("Wybierz produkt z listy: ");
+			bool isValid = int.TryParse(Console.ReadLine(), out int userPick);
+			Product selectedProduct = null;
+			if (!isValid)
+			{
+				Console.WriteLine("Nie wprowadzono poprawnej opcji. Spróbuj ponownie");
+			}
+			else
+			{
+				switch (userPick)
+				{
+					case 1:
+					case 2:
+					case 3:
+					case 4:
+					case 5:
+						selectedProduct = products[userPick - 1];
+						break;
+					case 6:
+						Menu();
+						break;
+					default:
+						break;
+				}
+				Console.Write($"Wybrałeś {selectedProduct.Name}. Jaką ilość chcesz dodać do koszyka?: ");
+				Order order = new Order();
+				bool isValidNumber = int.TryParse(Console.ReadLine(), out int userPickQuantity);
+				if (!isValidNumber)
+				{
+					Console.WriteLine("Niepoprawne dane. Spróbuj jeszcze raz");
+				}
+				else
+				{
+					if (userPickQuantity > 0)
+					{
+						orderList.Add(new OrderItem(selectedProduct, order, userPickQuantity));
+					}
+					else
+					{
+						Console.WriteLine("Nie można zamówić mniej niż 1 sztuki. Wprowadź ilość ponownie.");
+					}
+				}
 
+			}
 		}
-
 		static void DeletingProducts() { }
 
 		static void GetTotal()
